@@ -1,0 +1,21 @@
+!test:---:testing the bot commands
+!links:---:Follow on Twitter: http://twitter.com/paxpokemon Like us on Facebook: http://facebook.com/paxpokemon Watch us on YouTube: https://www.youtube.com/channel/UCqDzVMcwVDj1XE_mM3cm-RQ Check out our website: http://paxpokemonleague.net Join our forums: http://paxpokemonleague.net/forum/index.php
+!rules:---:We battle using the PAX Pokemon League rule set. You can see them below the stream or at this link: http://paxpokemonleague.net/rules
+!jabroni:---:A jabroni is someone like Erkenhelm
+!Erkenhelm:---:Well look who is back, back from being some Jabroni and stepping up his game.
+!commands:---:To get in line for battle type !add, to give us your friend code type !fc 1234-1234-1234 (hyphens not necessary), and to give us your IGN type !ign NAME. Make sure to type them on seperate lines.
+!battle:---:If you want to battle type !add, to add your friend code type !fc 1234-1234-1234, and to add you IGN type !ign Name. Make sure to type them all individually.
+!pplrules:---:We battle using the PAX Pokemon League rule set. You can see them below the stream or at this link: http://paxpokemonleague.net/rules
+!scott:---:Get back in your cage Scott!
+!showdown:---:To challenge the streamer to a battle, find Erkenhelm in the Lobby chat, click on it and select challenge. Alternatively you can type "/challenge Erkenhelm" into any Showdown chat room
+!themebattles:---:Erkenhelm will take a theme suggested by viewers and make a team around it on Showdown and use it in a few battles. If you want to battle him, send him a challenge and he will accept in the order that he receives them. To send a challenge, find his name in the list of chatters in the Lobby, click on it and click challenge.
+!twitter:---:http://twitter.com/paxpokemon
+!youtube:---:https://www.youtube.com/channel/UCqDzVMcwVDj1XE_mM3cm-RQ
+!intro:---:I am DarcelBot, a PPL bot made by some loser. I can keep track of friendCodes, IGN's, a line for battles and overall act pretty awesome. If you have any feedback feel free to contact Emre801 on twitter Kappa
+!Emre:---:Emre is a pretty cool guy, I like him :)
+!testC:---:Blarg Blarg Blarg
+!Butts:---:ButtsButtsButts
+!rules123:---:Cool Rules to follow
+!cool:---:This is the cool command
+!hank:---:This is the HankCommand
+!hanko:---:This is the HankCommand
