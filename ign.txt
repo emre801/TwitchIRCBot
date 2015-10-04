@@ -1,7 +1,7 @@
 paxpokemon:---:Emre801
 erkenhelm:---:Erkenhelm
 ryan61839:---:ryan
-emre801:---:Emre
+emre801:---: EmreHank0
 ah_scott:---:Ahscott
 slyexploud:---:sly rhino
 vesperia566:---:Daniel
@@ -33,3 +33,6 @@ valdusftw:---:valdus
 djohnmark:---:Johnmark
 joshhemi:---:Josh
 damekage:---:kageh
+theeternalflower:---:May
+winkbros:---:WinksBros
+bdrshreds7:---:Brendan

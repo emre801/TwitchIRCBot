@@ -2,7 +2,7 @@ require 'cinch'
 #require 'mysql'
 load 'Cred.rb'
 load 'pokegemTest.rb' ##Comment this out in Windows
-
+load 'runCommands.rb'
 $gChanel = ""
 $loadMySQL = false
 $writeMySQL = false
@@ -90,7 +90,7 @@ end
 
 cred = Cred.new()
 pokemonInfo = PokemonInfo.new
-
+readCommand = ReadCommand.new
 
 
 class Cinch::Message
@@ -175,86 +175,20 @@ bot = Cinch::Bot.new do
   end
   ##----------
   #
+
+  on :message, /^!(.+)/ do |m, responce|
+    readCommand.read_input(m,queue,responce,channel,fc_hash,ign_hash)
+  end
+
   ## FC and IGN management
-  on :message, "!add" do |m|
-
-    if (queue.include?(m.user.nick))
-      m.twitch "You are already in line for a battle, #{m.user.nick}"
-      return
-    end
-    m.twitch "#{m.user.nick}, has been added to the battleQueue"
-    queue.push m.user.nick
-    write_file_array(queue, "queue.txt")
-  end
-  
-  on :message, "!next" do |m|
-    if queue.length == 0 
-      m.twitch "No one is in queue"
-      return
-    end
-    if m.user.nick.eql?(channel)
-      battle = queue.shift 
-      person = battle
-      battle ="Next person for battle is #{battle}"
-      if(fc_hash.has_key?(person))
-        battle = battle + ", fc: " +  fc_hash[person][0..3] + "-" + fc_hash[person][4..7] + "-" + fc_hash[person][8..12]
-      else 
-        battle = battle + ", please enter your friend code, inorder to save code use !fc command"
-      end
-      if(ign_hash.has_key?(person))
-        battle = battle + ", IGN: " + ign_hash[person]
-      else
-        battle = battle + ", please enter your IGN inorder for it to be saved"
-      end
-      m.twitch battle
-      write_file_array(queue, "queue.txt")
-    end
-  end
-  on :message, /^!ign (.+)/ do |m, responce|
-    ign_hash[m.user.nick] = responce
-    m.twitch "your IGN has been saved, thank you"
-    write_file(ign_hash, "ign.txt") if !$writeMySQL
-    insert_new_value_into_table("ign", m.user.nick, responce) if $writeMySQL
-
-  end
-  on :message, /^!fc (.+)/ do |m, responce|
-    responce.strip!
-    originalMessage = responce
-    responce = responce.delete('^0-9')
-    if responce.length != 12
-      originalMessage.downcase! 
-      originalMessage.gsub!(/[^0-9A-Za-z]/, '') 
-      if(fc_hash.has_key?(originalMessage))
-          originalMessageR = fc_hash[originalMessage]
-          m.twitch originalMessage + " : " + originalMessageR[0..3] + "-" + originalMessageR[4..7] + "-" + originalMessageR[8..12]
-      else
-        m.twitch m.user.nick + ", You have entered an incorrect friend Code"
-      end
-      return;
-    end
-    m.twitch m.user.nick + ", Thank you. I have added your Friend Code to my Collection " + responce[0..3] + "-" + responce[4..7] + "-" + responce[8..12]
-    fc_hash[m.user.nick] = responce
-    write_file(fc_hash, "fc.txt") if !$writeMySQL
-    insert_new_value_into_table("fc", m.user.nick, responce) if $writeMySQL
-  end
   
   on :message, "!remove" do |m|
-    if queue.include?(m.user.nick)
-      queue.delete(m.user.nick)
-      m.twitch "You have been removed"
-      write_file_array(queue, "queue.txt")
-    else
-      m.twitch m.user.nick + ", you are not in line"
-    end
+    readCommand.remove(m,queue)
+    write_file_array(queue, "queue.txt")
   end
 
   on :message, "!fc" do |m, responce|
-    if(fc_hash.has_key?(m.user.nick))
-      responce = fc_hash[m.user.nick]
-      m.twitch m.user.nick + " : " + responce[0..3] + "-" + responce[4..7] + "-" + responce[8..12]
-    else 
-      m.twitch m.user.nick + " , please enter you friend code using \"!fc 1234-1234-1234\""
-    end
+    readCommand.fc(m,queue, responce, fc_hash)
   end
   
   
@@ -272,48 +206,10 @@ bot = Cinch::Bot.new do
     write_file(fc_hash, "fc.txt") if !$writeMySQL
     insert_new_value_into_table("fc", m.user.nick, responce) if $writeMySQL
   end
-  
-  on :message, "!line" do |m|
-    if(queue.length ==0)
-      m.twitch "No one is in line"
-      return
-    end
-    line = "";
-    queue.each { |item| line = line + " " + item  }
-    m.twitch line
-  end
   ##----------
   
 
 
-  ## Raffle Code
-  on :message, "!raffle" do |m|
-    if !raffle_lock
-      raffle[m.user.nick] = 0
-      m.twitch "You have been entered"
-    end
-  end
-  on :message, "!raffle_lock" do |m|
-    if(m.user.nick.eql?(channel))
-      raffle_lock = !raffle_lock
-      m.twitch "Raffle has been switch is is now: " + raffle_lock.to_s 
-    end
-  end
-  on :message, "!raffle_end" do |m|
-    if(m.user.nick.eql?(channel))
-      raffle = Hash.new
-      m.twitch "Raffle has been cleared"
-      raffle_lock = true
-    end
-  end
-  
-  on :message, "!raffle_winner" do |m|
-    if( m.user.name.eql?(channel))
-      people = raffle.keys
-      winner = rand(people.length)
-      m.twitch people[winner] + ", you are the winner"
-    end
-  end
   ##----------
   ## Make bot quit
   on :message, "!quit" do |m|
