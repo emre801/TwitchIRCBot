@@ -147,6 +147,8 @@ queue = build_commands_array("queue.txt")
 botname = cred.return_bot_name #this is where you'll enter your bot's name
 raffle = Hash.new
 raffle_lock = false;
+
+
 #write queue to file
   
 bot = Cinch::Bot.new do
@@ -159,12 +161,6 @@ bot = Cinch::Bot.new do
     c.user     = botname #change user to your bot's name
     c.plugins.plugins = [TimedPlugin]
   end
-  ## Commands that can be executed
-  hash.each { |command, response|  
-    on :message, command do |m|
-      m.twitch response
-    end
-  }
   on :message, "!listC" do |m|
     commandList = "The available commands are "
     hash.each { |command, response|  commandList = commandList + " " + command  }
@@ -177,7 +173,7 @@ bot = Cinch::Bot.new do
   #
 
   on :message, /^!(.+)/ do |m, responce|
-    readCommand.read_input(m,queue,responce,channel,fc_hash,ign_hash)
+    readCommand.read_input(m,queue,responce,channel,fc_hash,ign_hash, hash)
   end
 
   ## FC and IGN management

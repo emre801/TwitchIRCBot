@@ -13,16 +13,19 @@ class ReadCommand
 	end
 
 
-	def read_input(m, queue,responce, channel, fc_hash, ign_hash)
-	  m.twitch "Testing testing"
+	def read_input(m, queue,responce, channel, fc_hash, ign_hash, hash)
 	  sResponce = responce.split("!")
-	  sResponce.each { |item| execute_input(m,queue,item,channel,fc_hash,ign_hash)}
+	  sResponce.each { |item| execute_input(m,queue,item,channel,fc_hash,ign_hash,hash)}
       
 	end
 
-	def execute_input(m,queue,responce,channel,fc_hash,ign_hash)
+	def execute_input(m,queue,responce,channel,fc_hash,ign_hash, hash)
  	   responce.strip!
        lowerCase = responce.downcase
+       m.twitch responce
+       if(hash.has_key?("!"+responce))
+       	m.twitch hash["!"+responce]
+       end
        if lowerCase["add"]
        	add(m,queue)
        elsif lowerCase["next"]
