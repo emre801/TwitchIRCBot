@@ -22,7 +22,7 @@ class ReadCommand
 	def execute_input(m,queue,responce,channel,fc_hash,ign_hash, hash)
  	   responce.strip!
        lowerCase = responce.downcase
-       m.twitch responce
+       #m.twitch responce
        if(hash.has_key?("!"+responce))
        	m.twitch hash["!"+responce]
        end
